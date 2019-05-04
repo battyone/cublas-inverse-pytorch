@@ -29,8 +29,6 @@ namespace torch_cublas_inverse{
         AT_CHECK(n <= 32, "matrix col should be <= 32");
         AT_CHECK(n == m, "matrix not square.");
 
-        const auto lda = m;
-        
         const auto output = input.contiguous().clone();
 
         //need to mediate between float** and pytorch output (float*).
