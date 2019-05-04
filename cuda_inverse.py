@@ -1,7 +1,7 @@
 import torch
 import cuda_batch_inverse
 
-class cuda_invers(torch.autograd.Function):
+class cuda_inverse(torch.autograd.Function):
     @staticmethod
     def forward(ctx, input):
         output = cuda_batch_inverse.forward(input)
