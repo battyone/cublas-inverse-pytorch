@@ -72,6 +72,7 @@ namespace torch_cublas_inverse{
         //free allocated
         cudaFree(batched_input);
         cudaFree(batched_output);
+        cudaFree(INFO);
         delete [] batched_input_host;
         delete [] batched_output_host;
 
