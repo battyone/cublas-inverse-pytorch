@@ -1,0 +1,1 @@
+void printDeviceHost(float** input);
