@@ -1,5 +1,9 @@
 # cublas-inverse-pytorch
-cuBLAS-based batch inverse for PyTorch
+cuBLAS-based batch inverse for PyTorch.
+
+References:
+[1] [KinglittleQ/torch-batch-svd](https://github.com/KinglittleQ/torch-batch-svd)
+[2] [ShigekiKarita/pytorch-cusolver](https://github.com/ShigekiKarita/pytorch-cusolver) 
 
 ## Installation
 ``` shell
