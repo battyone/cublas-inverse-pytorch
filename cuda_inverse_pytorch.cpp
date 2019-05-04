@@ -11,8 +11,6 @@
 #include <cuda_runtime.h>
 #include <cublas_v2.h>
 
-#include "cuda_inverse_pytorch_device_test.h"
-
 
 cublasHandle_t getCurrentCUDABlasHandle() {
     return THCState_getCurrentBlasHandle(at::globalContext().getTHCState());
@@ -73,6 +71,12 @@ namespace torch_cublas_inverse{
                 INFO, 
                 batch_size);
     
+        //free allocated
+        cudaFree(batched_input);
+        cudaFree(batched_output);
+        delete [] batched_input_host;
+        delete [] batched_output_host;
+
         return output;
     }
     

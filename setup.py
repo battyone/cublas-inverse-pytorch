@@ -10,7 +10,7 @@ libname = "cuda_batch_inverse"
 setup(name=libname,
       ext_modules=[CppExtension(
           libname,
-          ['cuda_inverse_pytorch.cpp', 'cuda_inverse_pytorch_device_test.cu'],
+          ['cuda_inverse_pytorch.cpp'],
           include_dirs=inc,
           libraries=["cusolver", "cublas"],
           extra_compile_args={'cxx': ['-g', '-DDEBUG'],
