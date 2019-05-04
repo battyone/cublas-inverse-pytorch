@@ -25,8 +25,6 @@ namespace torch_cublas_inverse{
         const auto n = input.size(1);
         const auto m = input.size(2);
 
-        AT_CHECK(m <= 32, "matrix row should be <= 32");
-        AT_CHECK(n <= 32, "matrix col should be <= 32");
         AT_CHECK(n == m, "matrix not square.");
 
         const auto output = input.contiguous().clone();
@@ -57,17 +55,41 @@ namespace torch_cublas_inverse{
 
         auto cuBlasHandle = getCurrentCUDABlasHandle();
         
+        //kernel calls
+        if(n < 32)
+            cublasSmatinvBatched(cuBlasHandle, 
+                    n, 
+                    (const float**)batched_input, 
+                    n, 
+                    batched_output,
+                    n, 
+                    INFO, 
+                    batch_size);
 
-        
-        //kernel call
-        cublasSmatinvBatched(cuBlasHandle, 
-                n, 
-                (const float**)batched_input, 
-                n, 
-                batched_output,
-                n, 
-                INFO, 
-                batch_size);
+        else{
+            int* pivot_array;
+            cudaMalloc((void**)&pivot_array, n*batch_size*sizeof(int));
+
+            cublasSgetrfBatched(cuBlasHandle,
+                    n,
+                    batched_input,
+                    n, 
+                    pivot_array,
+                    INFO,
+                    batch_size);
+
+            cublasSgetriBatched(cuBlasHandle,
+                    n,
+                    batched_input,
+                    n,
+                    pivot_array,
+                    batched_output,
+                    n,
+                    INFO,
+                    batch_size);
+
+            cudaFree(pivot_array);
+        }
     
         //free allocated
         cudaFree(batched_input);
