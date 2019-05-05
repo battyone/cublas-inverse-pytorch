@@ -59,7 +59,7 @@ namespace torch_cublas_inverse{
         if(n < 32)
             cublasSmatinvBatched(cuBlasHandle, 
                     n, 
-                    (const float**)batched_input, 
+                    batched_input, 
                     n, 
                     batched_output,
                     n, 

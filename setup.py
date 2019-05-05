@@ -13,8 +13,8 @@ setup(name=libname,
           ['cuda_inverse_pytorch.cpp'],
           include_dirs=inc,
           libraries=["cusolver", "cublas"],
-          extra_compile_args={'cxx': ['-g', '-DDEBUG'],
-                              'nvcc': ['-O2']}
+          extra_compile_args={'cxx' : [],
+              'nvcc': ['-O2']}
       )],
       cmdclass={'build_ext': BuildExtension})
 
